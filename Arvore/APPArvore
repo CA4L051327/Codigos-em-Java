@@ -1,0 +1,72 @@
+ackage app;
+
+import tad.Arvore;
+
+public class AppArvore {
+
+    public static void main(String[] args) {
+        Arvore arvore = new Arvore();
+        int dado;
+
+        arvore.inserir(56);
+        arvore.inserir(45);
+        arvore.inserir(81);
+        arvore.inserir(72);
+        arvore.inserir(51);        
+        arvore.inserir(94);
+        arvore.inserir(89);
+        arvore.inserir(79);
+        arvore.inserir(33);
+        arvore.inserir(99);
+        arvore.inserir(15);
+        arvore.inserir(55);
+        
+        //inserir para testar o remover
+        //arvore.inserir(56);
+        
+        System.out.println("\n==== PRÉ-ORDEM====");
+        arvore.imprimirPreOrdem();
+        System.out.println("\n==== IN-ORDEM====");
+        arvore.imprimirInOrdem();
+        System.out.println("\n==== PÓS-ORDEM====");
+        arvore.imprimirPosOrdem();
+        
+        
+        //passo de inserção do nó 13
+        //arvore.inserir(13);
+        
+        //passo 1 (nó folha) de remoção do nó 3
+        if(arvore.remover(56)){
+            System.out.println("Nó Removido!!!");
+        }else{
+            System.out.println("Nó não encontrado!!!");
+        }
+        
+        //passo 2 (nó com 1 filho) de remoção do nó 14
+        //if(arvore.remover(14)){
+          //  System.out.println("Nó Removido!!!");
+        ///}else{
+          //  System.out.println("Nó não encontrado!!!");
+        //}
+        
+        //passo 3 (nó com 2 filhos) de remoção do nó 30
+        //if(arvore.remover(30)){
+          //  System.out.println("Nó Removido!!!");
+        //}else{
+          //  System.out.println("Nó não encontrado!!!");
+        //}
+        
+        
+        //pesquisar o nó 24
+        if(arvore.pesquisar(56)){
+            System.out.println(">>Nó encontrado!");
+        }else{
+            System.out.println("Nó não existe!!");
+        }
+        
+        arvore.remover(56);
+        System.out.println("");
+        arvore.imprimirPreOrdem();    
+
+    }
+}
