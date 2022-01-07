@@ -1,0 +1,144 @@
+package app;
+
+import java.text.Normalizer;
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+
+import tad.Stack;
+
+public class appFrasePalidromo {
+
+	public static void main(String[] args) {
+		
+		boolean retorna = true;
+
+		while (retorna) { // VAI FAZER O PROGRAMA SEMPRE RETORNAR PARA O MENU INICIAL
+			String frase = JOptionPane.showInputDialog("Informe a frase"); 
+
+			frase = tratarString(frase); //CHAMA O MÉTODO PARA TRATAR A FRASE, TIRANDO TODA A PONTUAÇÃO, ESPAÇOS E CARACTERES ESPECIAIS.
+
+			if (verificarPalindromo(frase)) { //CHAMA O MÉTODO QUE VAI VERIFICAR SE A FRASE É UM PALÍNDROMO OU NÃO.
+				JOptionPane.showMessageDialog(null, "É Palindromo!"); // SE O MÉTODO ACIMA RETORNAR TRUE, MOSTRA A MENSAGEM "É Palindromo!"
+			} else {
+				JOptionPane.showMessageDialog(null, "Não é Palindromo!"); // SE O MÉTODO RETORNAR FALSE, MOSTRA A MENSAGEM "Não é Palindromo!"
+			}
+		}
+
+	} //FIM DO MAIN
+	
+	
+	
+	
+
+	public static String tratarString(String frase) {  //MÉTODO PARA RETIRAR CARACTERES ESPECIAIS DA FRASE
+
+		//TROCA OS CARACTERES COM ACENTO PARA OS CORRESPONDENTES SEM ACENTO
+		//(PEGUEI AS DUAS LINHAS ABAIXO DA INTERNET, ENTÃO NEM SEI COMO ELAS FUNCIONAM KK 
+		frase = Normalizer.normalize(frase, Normalizer.Form.NFD);
+		frase = frase.replaceAll("[^\\p{ASCII}]", "");
+
+		//VAI RETIRAR DA FRASE CADA CARACTERE DE PONTUAÇÃO
+		frase = frase.replace(",", ""); //TROCA AS VIRGULAS POR UM CARACTERE SEM ESPAÇO
+		frase = frase.replace(".", "");//TROCA OS PONTOS POR UM CARACTERE SEM ESPAÇO
+		frase = frase.replace(";", "");//IDEM
+		frase = frase.replace(":", "");//IDEM
+		frase = frase.replace("?", "");//IDEM
+		frase = frase.replace("!", "");//IDEM
+		frase = frase.replace("(", "");//IDEM
+		frase = frase.replace(")", "");//IDEM
+		frase = frase.replace("-", "");//IDEM
+		frase = frase.replace("“", "");//IDEM
+		frase = frase.replace("”", "");//IDEM
+		frase = frase.replace("'", "");//IDEM
+		frase = frase.replace(" ", "");//TROCA TODOS OS ESPAÇOS VAZIOS POR UM CARACTERE SEM ESPCAÇO
+		frase = frase.toLowerCase(); //COLOCA TODA A FRASE EM MINÚSCULO 
+		return frase; 
+	}
+
+	public static boolean verificarPalindromo(String frase) {// MÉTODO QUE VAI VERIFICAR SE A FRASE É UM PALÍNDROMO OU NÃO.
+		
+		/*A IDÉIA É LERMOS A QUANTIDADE DE CARACTERES TOTAL DA FRASE. DIVIDIMOS A QUANTIDADE PELA METADE PARA PEGARMOS O
+		ÍNDICE DO CARACTERE DO MEIO. ESSE CARACTERE VAI SER NOSSA REFERENCIA (REF) PARA DIVIDIR A FRASE EM DUAS PARTES.
+		FAZEMOS UM FOR QUE VAI PERCORRER TODA A EXTENSÃO DA FRASE. ATÉ NOSSO REF (CARACTERE DA METADE DA FRASE) VAMOS 
+		ARMAZENAR NA PILHA. DEPOIS DO REF VAMOS ARMAZENANDO EM UM BUFFER, QUE SERVE PARA CONCATENAR STRINGS (VAI CONCATENANDO CADA
+		CARACTERE).  DEPOIS DE FINALIZADO O FOR, VAMOS DESEMPILHAR NOSSA PILHA E ARMAZENAR EM UM SEGUNDO BUFFER (AINDA NÃO PODERIAMOS
+		ARMAZENAR EM UMA STRING POIS TEMOS QUE CONCATENAR CADA CARACTERE QUE É DESEMPILHADO. POR ISSO USAMOS UM BUFFER). AO DESEMPILHAR, A 1º
+		METADE DA FRASE QUE ARMAZENAMOS VAI APARECER AO CONTRARIO. PEGAMOS A 2º METADE QUE ARMAZENAMOS NO BUFFER2. 
+		 JOGAMOS AS METADES QUE COLOCAMOS NOS BUFFERS EM 2 STRINGS DIFERENTES E POR FIM COMPARAMOS SE ELAS SÃO IGUAIS OU NÃO. 
+		 SE ELAS FOREM IGUAIS ENTÃO A FRASE É UM PALÍNDROMO, CASO CONTRÁRIO NÃO É.*/
+		
+		
+		
+		
+		Stack pilha = new Stack(); //CRIAÇÃO DA PILHA
+		StringBuffer buffer1 = new StringBuffer(); // CRIAÇÃO DE UM BUFFER PARA ARMAZENAR A FRASE QUANDO DESEMPILHARMOS
+		StringBuffer buffer2 = new StringBuffer();// CRIAÇÃO DE OUTRO BUFFER QUE VAI ARMAZENAR A SEGUNDA METADE DA FRASE.
+		String seq1, seq2;
+
+		if (frase.length() % 2 == 0) { //DETALHE AQUI: SE A QUANTIDADE DE CARACTERES FOR PAR, O CARACTERE DO MEIO É ARMAZENADO JUNTO COM A SEGUNDA METADE(LINHA 100). 
+									   //CASO SEJA ÍMPAR, PULA PARA A LINHA 123.
+			
+			int ref = frase.length() / 2; //DIVIDE A QUANTIDADE TOTAL DE CARACTERES DA FRASE POR 2 PARA PEGARMOS O CARACTERE DO MEIO.
+
+			for (int i = 0; i < frase.length(); i++) { //"FOR" QUE VAI PERCORRER TODA A FRASE
+
+				if (i < ref) {
+					pilha.push(frase.charAt(i)); // armazena a primeira metade da frase numa pilha.
+				}
+
+				if (i >= ref) {
+					buffer1.append(frase.charAt(i)); // armazena a segunda metade da frase num buffer1. PERCEBA QUE O CARACTERE DO MEIO SERÁ ARMAZENADO JUNTO COM A 2ºMETADE.
+				}
+
+			}
+
+			while (!pilha.isEmpty()) { // VAI DESEMPILHANDO ENQUANTO A FILA NÃO ESTIVER VAZIA
+				buffer2.append(pilha.pop()); // desempilha, armazenando os dados num buffer2.
+			}
+
+			// transformando os buffers em Strings.
+			seq1 = buffer2.toString();
+			seq2 = buffer1.toString();
+
+			// comparando as Strings
+			if (seq1.equalsIgnoreCase(seq2)) {
+				return true;
+			} else {
+				return false;
+			}
+			
+		} else { // SE A QUANTIDADE DE CARACTERES FOR ÍMPAR, O CARACTERE DO MEIO É IGNORADO.
+
+			int ref = frase.length() / 2;
+
+			for (int i = 0; i < frase.length(); i++) { // "FOR" QUE VAI PERCORRER TODA A FRASE
+
+				if (i < ref) {
+					pilha.push(frase.charAt(i));
+				}
+
+				if (i > ref) {// PERCEBA QUE O CARACTERE DO MEIO SERÁ IGNORADO.
+					buffer1.append(frase.charAt(i));
+				}
+
+			}
+
+			while (!pilha.isEmpty()) {
+				buffer2.append(pilha.pop());
+			}
+
+			seq1 = buffer2.toString();
+			seq2 = buffer1.toString();
+
+			if (seq1.equalsIgnoreCase(seq2)) {
+				return true;
+			} else {
+				return false;
+			}
+
+		}
+
+	}
+
+}
