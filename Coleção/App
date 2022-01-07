@@ -1,0 +1,23 @@
+import tad.Colecao;
+
+public class AppColecao {
+    public static void main(String[] args) {
+        int tamanho = 5;
+        Colecao col = new Colecao(tamanho);
+        
+        col.inserir(77);
+        col.inserir(99);
+        col.inserir(44);
+        col.inserir(55);
+        col.inserir(22);
+        col.inserir(88);
+        System.out.println(col.imprimir());
+        
+        if(col.buscar(35))
+            System.out.println("Encontrou " + 35);
+        else
+            System.out.println("NÃO Encontrou " + 35);
+        col.deletar(55);
+        System.out.println(col.imprimir());
+    }
+}

@@ -1,0 +1,52 @@
+package tad;
+
+public class Colecao {
+    //atributos
+    private int dados[]; //array de dados
+    private int numElementos; //número atual de elementos
+    
+    public Colecao(int tamanho){    //construtor
+        dados = new int[tamanho];   //cria o array dados
+        this.numElementos = 0;      //nenhum item inserido ainda        
+    }
+    
+    public boolean buscar(int chaveBusca){ //procura por chave busca no array
+        for(int i = 0; i < numElementos; i++){
+            if(dados[i] == chaveBusca)
+                return true; //encontrou o elemento 
+        }
+        return false;   //percorreu todo o vetor e não encontrou chaveBusca
+    }
+    
+    public void inserir(int novoElemento){
+        if(numElementos < dados.length){ //tem espaço no array?
+            dados[numElementos] = novoElemento; //armazena 
+            numElementos++; //incrementa o índice do array
+        }
+    }
+    
+    public boolean deletar(int valorRemover){
+        int i;
+        for(i = 0; i < numElementos; i++)
+            if(dados[i] == valorRemover)
+                break;      //encerra o for
+        
+        if(i == numElementos)  //chegou ao limite e não achou nada
+            return false;
+        else{                  //encontrou a chave de busca 
+            for(int k = i; k < numElementos - 1; k++) //desloca elementos para a esquerda
+                dados[k] = dados[k+1];
+            numElementos--;             //diminui o número de elementos
+            return true;
+        }            
+    }
+    
+    public StringBuilder imprimir(){
+        StringBuilder saida = new StringBuilder("Dados do Vetor\n");
+        for(int i = 0; i < numElementos; i++){
+            saida.append(dados[i]);
+            saida.append("\n");
+        }
+        return saida;
+    }
+}
