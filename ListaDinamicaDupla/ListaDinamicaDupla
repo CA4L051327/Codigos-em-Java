@@ -1,0 +1,35 @@
+package app;
+
+import tad.DoubleList;
+
+public class AppListaDupla {
+    public static void main(String[] args) {
+        DoubleList listaDupla = new DoubleList();
+        
+        listaDupla.insertLast(30);
+        listaDupla.insertLast(70);
+        listaDupla.insertLast(50);
+        
+        listaDupla.insertFirst(15);
+        System.out.println(listaDupla);
+        
+        System.out.println("==>lista invertida");
+        System.out.println(listaDupla.inverter());
+                
+        listaDupla.insert(45, 2);
+        System.out.println(listaDupla);
+        
+        System.out.println("size: " + listaDupla.size());
+        
+        //listaDupla.remove(6);  //lança exceção
+        //listaDupla.remove(4);  //remove da última posição
+        //listaDupla.remove(0); //remove da primeira posição
+        //listaDupla.remove(2); //remove da posição 2 - dado 45
+        
+        System.out.println(listaDupla);
+        
+        System.out.println("==>lista invertida");
+        System.out.println(listaDupla.inverter());       
+        System.out.println("size: " + listaDupla.size());
+    }
+}

@@ -1,0 +1,18 @@
+package tad;
+
+public class No {
+    //atributos
+    int dado;
+    No prox; //auto referencia
+    No ant; //auto referencia
+    
+    public No(int dado){
+        this.dado = dado;
+        ant = prox = null; //referencia nula
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(dado);
+    }
+}

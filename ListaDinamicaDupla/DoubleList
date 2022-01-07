@@ -1,0 +1,202 @@
+package tad;
+
+public class DoubleList {
+    //atributos
+    private No inicio;
+    private No fim;
+    private int total;
+
+    //construtor
+    public DoubleList() {
+        inicio = fim = null;
+        total = 0;
+    }
+
+    //insere o dado no inicio da lista
+    public void insertFirst(int dado) {
+        No novoNo = new No(dado);
+        if (isEmpty()) {
+            inicio = fim = novoNo;
+        } else {
+            inicio.ant = novoNo;
+            novoNo.prox = inicio;
+            inicio = novoNo;
+        }
+        total++;
+    }
+
+    //insere o dado no fim da lista
+    public void insertLast(int dado) {
+        No novoNo = new No(dado);
+        if (isEmpty()) {
+            inicio = fim = novoNo;
+        } else {
+            fim.prox = novoNo;
+            novoNo.ant = fim;
+            fim = novoNo;
+        }
+        total++;
+    }
+
+    //insere o dado na posicao especifica
+    public void insert(int dado, int posicao) {
+        No novoNo = new No(dado);
+
+        //é uma posição inválida?
+        if (posicao < 0 || posicao > total) {
+            throw new RuntimeException("==>Posicao Invalida!!");
+        }
+
+        if (posicao == 0) {
+            insertFirst(dado);
+        } else { //a posição não é zero
+            if (posicao == size()) { //é igual ao total, então insere no fim
+                insertLast(dado);
+            } else { //é uma posição intermediária?
+                No aux = inicio; //cria nó auxiliar 
+                int cont = 0; //cria um contador de posicao
+                //então caminha na lista enquanto não for null e 
+                //até que atinga a posição de inserção
+                while (aux != null && !(cont == posicao)) {
+                    aux = aux.prox;
+                    cont++;
+                }
+                novoNo.prox = aux; //o prox do novo nó passa a apontar para o aux
+                novoNo.ant = aux.ant; //o ant do novo nó passa a apontar para ant do aux
+                aux.ant.prox = novoNo; //o prox do ant do aux passa a ser o novo no
+                aux.ant = novoNo; //o ant do aux passa a ser o novo no;               
+                total++;
+            }
+        }        
+    }
+
+    public int remove(int posicao) {
+        No temp;
+        //é uma posição inválida?
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        //é posição zero?
+        if (posicao == 0) {
+            temp = inicio;
+            if (size() == 1) {
+                inicio = fim = null;
+            } else {
+                inicio = inicio.prox;
+                inicio.ant = null;
+            }
+        } else {
+            //é o fim?
+            if (posicao == size() - 1) {
+                temp = fim;
+                fim = fim.ant;
+                fim.prox = null;
+            } else {
+                //para as demais posições
+                No aux = inicio; //cria nó auxiliar que aponta para o inicio
+                int cont = 0; //cria um contador de posicao
+                //então caminha na lista enquanto não for null e 
+                //até que atinga a posição de remoção
+                while (aux != null && !(cont == posicao)) {
+                    aux = aux.prox;
+                    cont++;
+                }
+                temp = aux; //atribui aux para temp
+
+                temp.ant.prox = temp.prox; //o prox do ant do temp passa a ser o prox do temp
+                temp.prox.ant = temp.ant; //o ant do prox do temp passa a ser o ant do temp          
+            }
+        }
+        total--;
+        return temp.dado;
+    }
+    
+    //modifica o dado na posição espeficada
+    public void set(int dado, int posicao) {
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        No aux = inicio;
+        int cont = 0;
+        //caminha na lista enquanto aux não for null e a posicao for diferente do cont
+        while (aux != null && posicao != cont) {
+            aux = aux.prox;
+            cont++;
+        }
+        //altera o valor do dado
+        aux.dado = dado;
+    }
+
+    //retorna o dado da posição especificada
+    public int get(int posicao) {
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        No aux = inicio;
+        int cont = 0;
+        //caminha na lista enquanto aux não for null e a posicao for diferente do cont
+        while (aux != null && posicao != cont) {
+            aux = aux.prox;
+            cont++;
+        }
+        return aux.dado;
+    }
+
+    //verifica se um dado existe na lista
+    public boolean exist(int dado) {
+        if (isEmpty()) {
+            return false;
+        }
+
+        No aux = inicio;
+        while (aux != null) {
+            //percorre a lista do inicio e compara o dado do aux com o dado parametro
+            if (aux.dado == dado) {
+                return true;
+            }
+            aux = aux.prox;
+        }
+        //não encontrou nada
+        return false;
+    }
+
+    //retorna o total de nos da lista
+    public int size() {
+        return total;
+    }
+
+    //verifica se a lista está vazia
+    public boolean isEmpty() {
+        return total == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder saida = new StringBuilder();
+
+        No atual = inicio; //atual aponta para o início da lista
+        //enquanto não encontrar null
+        while (atual != null) {
+            saida.append(atual.dado).append(" ");
+            //avança para a próxima referência
+            atual = atual.prox;
+        }
+        return saida.toString();
+    }
+    
+    public String inverter(){
+        StringBuilder saida = new StringBuilder();
+        No atual = fim;
+        
+        //enquanto não encontrar null
+        while(atual != null){
+             saida.append(atual.dado).append(" ");
+            //retorna para a referência anterior
+            atual = atual.ant;
+        }
+        return saida.toString();
+    }
+}
