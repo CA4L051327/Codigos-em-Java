@@ -1,0 +1,202 @@
+package tad;
+
+public class DoubleList {
+    //atributos
+    private No inicio;
+    private No fim;
+    private int total;
+
+    //construtor
+    public DoubleList() {
+        inicio = fim = null;
+        total = 0;
+    }
+
+    //insere o dado no inicio da lista
+    public void insertFirst(int dado) {
+        //passo 1 criar novo No
+        No novoNo = new No();
+        //passo 2 verifica se está vazia
+        
+        
+        //implemente a inserção
+        
+        
+        //senão estiver vazia implemente a inserção
+        //incremente total
+    }
+
+    //insere o dado no fim da lista
+    public void insertLast(int dado) {
+        //// passo 1 criar novo No
+        
+        
+        //// passo 2 verifica se está vazia
+                //implemente a inserção
+        
+        //// senão estiver vazia implemente a inserção
+        
+        //// incremente total
+    }
+
+    //insere o dado na posicao especifica
+    public void insert(int dado, int posicao) {
+        No novoNo = new No(dado);
+
+        //é uma posição inválida?
+        if (posicao < 0 || posicao > total) {
+            throw new RuntimeException("==>Posicao Invalida!!");
+        }
+
+        if (posicao == 0) {
+            insertFirst(dado);
+        } else { //a posição não é zero
+            if (posicao == size()) { //é igual ao total, então insere no fim
+                insertLast(dado);
+            } else { //é uma posição intermediária?
+                No aux = inicio; //cria nó auxiliar 
+                int cont = 0; //cria um contador de posicao
+                //então caminha na lista enquanto não for null e 
+                //até que atinga a posição de inserção
+                while (aux != null && !(cont == posicao)) {
+                    aux = aux.prox;
+                    cont++;
+                }
+                
+                //// implemente a inserção na posição indicada
+                
+                
+                ////
+                total++;
+            }            
+        }        
+    }
+
+    public int remove(int posicao) {
+        No temp;
+        //é uma posição inválida?
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        //é posição zero?
+        if (posicao == 0) {
+            temp = inicio;
+            if (size() == 1) {
+                inicio = fim = null;
+            } else {
+                inicio = inicio.prox;
+                inicio.ant = null;
+            }
+        } else {
+            //é o fim?
+            if (posicao == size() - 1) {
+                temp = fim;
+                fim = fim.ant;
+                fim.prox = null;
+            } else {
+                //para as demais posições
+                No aux = inicio; //cria nó auxiliar que aponta para o inicio
+                int cont = 0; //cria um contador de posicao
+                //então caminha na lista enquanto não for null e 
+                //até que atinga a posição de remoção
+                while (aux != null && !(cont == posicao)) {
+                    aux = aux.prox;
+                    cont++;
+                }
+               
+                //// implemente a remoção na posição indicada
+                
+                
+                //// 
+            }
+        }
+        total--;
+        return temp.dado;
+    }
+    
+    //modifica o dado na posição espeficada
+    public void set(int dado, int posicao) {
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        No aux = inicio;
+        int cont = 0;
+        //caminha na lista enquanto aux não for null e a posicao for diferente do cont
+        while (aux != null && posicao != cont) {
+            aux = aux.prox;
+            cont++;
+        }
+        //altera o valor do dado
+        aux.dado = dado;
+    }
+
+    //retorna o dado da posição especificada
+    public int get(int posicao) {
+        if (posicao < 0 || posicao >= total || isEmpty()) {
+            throw new RuntimeException("==>Posicao Invalida ou Lista Vazia");
+        }
+
+        No aux = inicio;
+        int cont = 0;
+        //caminha na lista enquanto aux não for null e a posicao for diferente do cont
+        while (aux != null && posicao != cont) {
+            aux = aux.prox;
+            cont++;
+        }
+        return aux.dado;
+    }
+
+    //verifica se um dado existe na lista
+    public boolean exist(int dado) {
+        if (isEmpty()) {
+            return false;
+        }
+
+        No aux = inicio;
+        while (aux != null) {
+            //percorre a lista do inicio e compara o dado do aux com o dado parametro
+            if (aux.dado == dado) {
+                return true;
+            }
+            aux = aux.prox;
+        }
+        //não encontrou nada
+        return false;
+    }
+
+    //retorna o total de nos da lista
+    public int size() {
+        return total;
+    }
+
+    //verifica se a lista está vazia
+    public boolean isEmpty() {
+        return total == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder saida = new StringBuilder();
+
+        No atual = inicio; //atual aponta para o início da lista
+        //enquanto não encontrar null
+        while (atual != null) {
+            saida.append(atual.dado).append(" ");
+            //avança para a próxima referência
+            atual = atual.prox;
+        }
+        return saida.toString();
+    }
+    
+    public String inverter(){
+        StringBuilder saida = new StringBuilder();
+        
+        //// implemente o caminho do fim para o início
+        
+        ////
+        
+        return saida.toString();
+    }
+}
