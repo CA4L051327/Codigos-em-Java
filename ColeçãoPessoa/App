@@ -1,0 +1,33 @@
+package app;
+
+import dados.Pessoa;
+import java.util.Scanner;
+import tad.Colecao;
+
+public class AppColecaoPessoa {
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int tamanho = 4;
+        String nome, endRetornado = "";
+        
+        Colecao contatos = new Colecao(tamanho);
+        
+        contatos.inserir(new Pessoa("Maria", "Rua Joaquim Jose, 2020"));
+        contatos.inserir(new Pessoa("Pedro", "Rua XYZ, 1000"));
+        contatos.inserir(new Pessoa("Mario", "Rua HI, 3000"));
+        contatos.inserir(new Pessoa("Renato", "AV PIO X, 4000"));
+                
+        System.out.println(contatos.imprimir());
+        
+        System.out.println("===> Pesquisa por nome ");
+        System.out.println("Digite um nome: ");
+        nome = entrada.nextLine();
+                
+        endRetornado = contatos.buscar(nome);
+        
+        if(endRetornado != null)
+            System.out.println("O endereço de: " + nome + " é: " + endRetornado);
+        else
+            System.out.println("Endereço não encontrado!");        
+    }    
+}

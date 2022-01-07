@@ -1,0 +1,44 @@
+package tad;
+
+import dados.Pessoa;
+
+public class Colecao {
+    //atributos
+    private Pessoa []dados;
+    private int numElementos;
+    
+    //construtor
+    public Colecao(int tamanho){
+        dados = new Pessoa[tamanho];
+        numElementos = 0;
+    }
+    
+    public void inserir(Pessoa p){
+        if(numElementos < dados.length)
+            dados[numElementos++] = p;
+    }
+    
+    public boolean excluir(Pessoa p){
+        for(int i = 0; i < numElementos; i++){
+            if(dados[i].equals(p))
+                return true;
+        }
+        return false;
+    }
+    
+    public String buscar(String nome){
+        for(int i = 0; i < numElementos; i++){
+            if(dados[i].getNome().equalsIgnoreCase(nome))
+                return dados[i].getEndereco();
+        }
+        return null;
+    }
+    
+    public StringBuilder imprimir(){
+        StringBuilder saida = new StringBuilder();
+        for(int i = 0; i < numElementos; i++){            
+            saida.append(dados[i]).append("\n");              
+        }
+        return saida;
+    }
+}
