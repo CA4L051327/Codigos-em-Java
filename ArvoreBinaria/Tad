@@ -1,0 +1,137 @@
+package tad;
+
+public class Arvore {
+    //atributos
+    private No raiz;
+
+    public Arvore() {
+        raiz = null;
+    }
+
+    public void inserir(int dado) {
+        if (isEmpty()) {
+            raiz = new No(dado);
+            System.out.println("Raiz: " + raiz.dado);
+        } else {
+            No novoNo = new No(dado);
+            inserir(raiz, novoNo);
+        }
+    }
+
+    //método de inserção recursivo
+    private void inserir(No raiz, No novoNo) {
+        //insere na esquerda
+        if (novoNo.dado < raiz.dado) {
+            if (raiz.esq == null) {
+                raiz.esq = novoNo;
+                System.out.println("No "+ novoNo.dado + " inserido à ESQ de: " + raiz.dado);
+            } else {
+                inserir(raiz.esq, novoNo);
+            }
+        } else {
+            if (novoNo.dado > raiz.dado) {
+                if (raiz.dir == null) {
+                    raiz.dir = novoNo;
+                    System.out.println("No "+ novoNo.dado +" inserido à DIR de: " + raiz.dado);
+                } else {
+                    inserir(raiz.dir, novoNo);
+                }
+            }
+        }
+    }
+
+    //remover um dado da arvore
+    public boolean remover(int dado) {
+        if (pesquisar(dado)) {
+            raiz = remover(raiz, dado);
+            return true;
+        }
+        
+        return false;
+    }
+
+    private No remover(No raiz, int dado) {
+        if (raiz != null) {
+            if (dado < raiz.dado)
+                raiz.esq = remover(raiz.esq, dado);
+            else if (dado > raiz.dado) 
+                raiz.dir = remover(raiz.dir, dado);
+            else if (raiz.esq == null)
+                raiz = raiz.dir;
+            else if (raiz.dir == null)
+                raiz = raiz.esq;
+            else //tem dois filhos
+                raiz.dir = getMinimo(raiz, raiz.dir);
+        }
+        return raiz;
+    }
+
+    private No getMinimo(No raiz, No sub) {
+        if (sub.esq == null) {
+            //raiz passa a ser o menor valor da sub-árvore da direita
+            raiz.dado = sub.dado;
+            return sub.dir;
+        } else {
+            sub.esq = getMinimo(raiz, sub.esq);
+        }
+        return sub;
+    }    
+
+    //pesquisa dado na árvore
+    public boolean pesquisar(int dado) {
+        return pesquisar(raiz, dado);
+    }
+
+    private boolean pesquisar(No raiz, int dado) {
+        if (raiz == null) //o nó está vazio??
+            return false;        
+        if (dado == raiz.dado) //é o nó atual?
+            return true;        
+        //tem nó filho
+        if (dado < raiz.dado) //pesquisa à esquerda            
+            return pesquisar(raiz.esq, dado);
+        else //pesquisa à direita
+            return pesquisar(raiz.dir, dado);
+    }    
+
+    public boolean isEmpty() {
+        return raiz == null;
+    }
+
+    //impressao in ordem
+    public void imprimirInOrdem() {
+        inOrdem(raiz);
+    }
+
+    private void inOrdem(No raiz) {
+        if (raiz != null) {
+            inOrdem(raiz.esq);
+            System.out.print(" " + raiz.dado);
+            inOrdem(raiz.dir);
+        }
+    }
+
+    public void imprimirPreOrdem() {
+        preOrdem(raiz);
+    }
+
+    private void preOrdem(No raiz) {
+        if (raiz != null) {                
+            System.out.print(" " + raiz.dado);
+            preOrdem(raiz.esq);
+            preOrdem(raiz.dir);
+        }
+    }
+
+    public void imprimirPosOrdem() {
+        posOrdem(raiz);
+    }
+
+    private void posOrdem(No raiz) {
+        if (raiz != null) {
+            posOrdem(raiz.esq);
+            posOrdem(raiz.dir);
+            System.out.print(" " + raiz.dado);
+        }
+    }   
+}
